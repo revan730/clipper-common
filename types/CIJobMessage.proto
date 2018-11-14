@@ -1,0 +1,11 @@
+syntax = "proto3";
+package types;
+
+message CIJob {
+    string repoURL = 1;
+    string branch = 2;
+    string headSHA = 3;
+    string user = 4;
+    string accessToken = 5;
+    int64 repoID = 6;
+}
