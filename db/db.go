@@ -253,3 +253,38 @@ func (d *DatabaseClient) FindAllBranchConfigs(repoID int64, q url.Values) ([]typ
 
 	return configs, err
 }
+
+// CreateBuild creates repo build record from provided struct
+func (d *DatabaseClient) CreateBuild(b *types.Build) error {
+	return d.pg.Insert(b)
+}
+
+// FindAllBuilds returns all builds for provided repo id
+// with pagination support (by passing query params of request)
+// TODO: don't select stdouts here?
+func (d *DatabaseClient) FindAllBuilds(repoID int64, q url.Values) ([]types.Build, error) {
+	var builds []types.Build
+
+	err := d.pg.Model(&builds).
+		Apply(orm.Pagination(q)).
+		Where("github_repo_id = ?", repoID).
+		Select()
+
+	return builds, err
+}
+
+// CreateBuildArtifact creates build artifact record from provided struct
+func (d *DatabaseClient) CreateBuildArtifact(b *types.BuildArtifact) error {
+	return d.pg.Insert(b)
+}
+
+// FindBuildArtifact returns build artifact for provided build id
+func (d *DatabaseClient) FindBuildArtifact(buildID int64) (*types.BuildArtifact, error) {
+	buildArtifact := &types.BuildArtifact{}
+
+	err := d.pg.Model(buildArtifact).
+		Where("build_id = ?", buildID).
+		Select()
+
+	return buildArtifact, err
+}
