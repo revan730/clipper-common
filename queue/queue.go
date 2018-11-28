@@ -34,7 +34,7 @@ func declareQueue(ch *amqp.Channel, queueName string) (amqp.Queue, error) {
 }
 
 // NewQueue creates new copy of Queue
-func NewQueue(addr, queue string) *Queue {
+func NewQueue(addr string) *Queue {
 	conn, err := amqp.Dial(addr)
 	if err != nil {
 		panic(fmt.Sprintf("Couldn't connect to rabbitmq: %s", err))
