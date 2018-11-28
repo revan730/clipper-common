@@ -109,3 +109,8 @@ func (q *Queue) MakeCIMsgChan() (chan []byte, error) {
 func (q *Queue) MakeCDMsgChan() (chan []byte, error) {
 	return q.makeMsgChan(q.CDJobsQueue.Name)
 }
+
+// Close gracefully breaks connection with rabbitMQ
+func (q *Queue) Close() {
+	q.rabbitConnection.Close()
+}
