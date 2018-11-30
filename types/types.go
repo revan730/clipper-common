@@ -60,7 +60,7 @@ func (u User) Authenticate(password string) bool {
 	return err == nil
 }
 
-type DBClientConfig struct {
+type PGClientConfig struct {
 	DBAddr        string
 	DB            string
 	DBUser        string
