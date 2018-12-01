@@ -11,3 +11,13 @@ message Build {
     string Branch = 5;
     string Stdout = 6; 
 }
+
+message BuildArtifact {
+    int64 ID = 1;
+    int64 BuildID = 2;
+    string Name = 3; 
+}
+
+service CIAPI {
+    rpc GetBuild(Build) returns (Build) {}
+}
