@@ -6,7 +6,10 @@ package types
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import types "github.com/gogo/protobuf/types"
+import timestamp "github.com/golang/protobuf/ptypes/timestamp"
+
+import context "golang.org/x/net/context"
+import grpc "google.golang.org/grpc"
 
 import io "io"
 
@@ -22,15 +25,15 @@ var _ = math.Inf
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 type Build struct {
-	ID                   int64            `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
-	GithubRepoID         int64            `protobuf:"varint,2,opt,name=GithubRepoID,proto3" json:"GithubRepoID,omitempty"`
-	IsSuccessfull        bool             `protobuf:"varint,3,opt,name=IsSuccessfull,proto3" json:"IsSuccessfull,omitempty"`
-	Date                 *types.Timestamp `protobuf:"bytes,4,opt,name=Date" json:"Date,omitempty"`
-	Branch               string           `protobuf:"bytes,5,opt,name=Branch,proto3" json:"Branch,omitempty"`
-	Stdout               string           `protobuf:"bytes,6,opt,name=Stdout,proto3" json:"Stdout,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
-	XXX_unrecognized     []byte           `json:"-"`
-	XXX_sizecache        int32            `json:"-"`
+	ID                   int64                `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
+	GithubRepoID         int64                `protobuf:"varint,2,opt,name=GithubRepoID,proto3" json:"GithubRepoID,omitempty"`
+	IsSuccessfull        bool                 `protobuf:"varint,3,opt,name=IsSuccessfull,proto3" json:"IsSuccessfull,omitempty"`
+	Date                 *timestamp.Timestamp `protobuf:"bytes,4,opt,name=Date" json:"Date,omitempty"`
+	Branch               string               `protobuf:"bytes,5,opt,name=Branch,proto3" json:"Branch,omitempty"`
+	Stdout               string               `protobuf:"bytes,6,opt,name=Stdout,proto3" json:"Stdout,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
 }
 
 func (m *Build) Reset()         { *m = Build{} }
@@ -87,7 +90,7 @@ func (m *Build) GetIsSuccessfull() bool {
 	return false
 }
 
-func (m *Build) GetDate() *types.Timestamp {
+func (m *Build) GetDate() *timestamp.Timestamp {
 	if m != nil {
 		return m.Date
 	}
@@ -175,6 +178,79 @@ func init() {
 	proto.RegisterType((*Build)(nil), "types.Build")
 	proto.RegisterType((*BuildArtifact)(nil), "types.BuildArtifact")
 }
+
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConn
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion4
+
+// Client API for CIAPI service
+
+type CIAPIClient interface {
+	GetBuild(ctx context.Context, in *Build, opts ...grpc.CallOption) (*Build, error)
+}
+
+type cIAPIClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewCIAPIClient(cc *grpc.ClientConn) CIAPIClient {
+	return &cIAPIClient{cc}
+}
+
+func (c *cIAPIClient) GetBuild(ctx context.Context, in *Build, opts ...grpc.CallOption) (*Build, error) {
+	out := new(Build)
+	err := c.cc.Invoke(ctx, "/types.CIAPI/GetBuild", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// Server API for CIAPI service
+
+type CIAPIServer interface {
+	GetBuild(context.Context, *Build) (*Build, error)
+}
+
+func RegisterCIAPIServer(s *grpc.Server, srv CIAPIServer) {
+	s.RegisterService(&_CIAPI_serviceDesc, srv)
+}
+
+func _CIAPI_GetBuild_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Build)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CIAPIServer).GetBuild(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/types.CIAPI/GetBuild",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CIAPIServer).GetBuild(ctx, req.(*Build))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _CIAPI_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "types.CIAPI",
+	HandlerType: (*CIAPIServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetBuild",
+			Handler:    _CIAPI_GetBuild_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "CI.proto",
+}
+
 func (m *Build) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -460,7 +536,7 @@ func (m *Build) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Date == nil {
-				m.Date = &types.Timestamp{}
+				m.Date = &timestamp.Timestamp{}
 			}
 			if err := m.Date.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
