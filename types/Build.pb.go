@@ -6,7 +6,7 @@ package types
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import timestamp "github.com/golang/protobuf/ptypes/timestamp"
+import types "github.com/gogo/protobuf/types"
 
 import io "io"
 
@@ -22,15 +22,15 @@ var _ = math.Inf
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 type Build struct {
-	ID                   int64                `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
-	GithubRepoID         int64                `protobuf:"varint,2,opt,name=GithubRepoID,proto3" json:"GithubRepoID,omitempty"`
-	IsSuccessfull        bool                 `protobuf:"varint,3,opt,name=IsSuccessfull,proto3" json:"IsSuccessfull,omitempty"`
-	Date                 *timestamp.Timestamp `protobuf:"bytes,4,opt,name=Date" json:"Date,omitempty"`
-	Branch               string               `protobuf:"bytes,5,opt,name=Branch,proto3" json:"Branch,omitempty"`
-	Stdout               string               `protobuf:"bytes,6,opt,name=Stdout,proto3" json:"Stdout,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
-	XXX_unrecognized     []byte               `json:"-"`
-	XXX_sizecache        int32                `json:"-"`
+	ID                   int64            `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
+	GithubRepoID         int64            `protobuf:"varint,2,opt,name=GithubRepoID,proto3" json:"GithubRepoID,omitempty"`
+	IsSuccessfull        bool             `protobuf:"varint,3,opt,name=IsSuccessfull,proto3" json:"IsSuccessfull,omitempty"`
+	Date                 *types.Timestamp `protobuf:"bytes,4,opt,name=Date" json:"Date,omitempty"`
+	Branch               string           `protobuf:"bytes,5,opt,name=Branch,proto3" json:"Branch,omitempty"`
+	Stdout               string           `protobuf:"bytes,6,opt,name=Stdout,proto3" json:"Stdout,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
 }
 
 func (m *Build) Reset()         { *m = Build{} }
@@ -87,7 +87,7 @@ func (m *Build) GetIsSuccessfull() bool {
 	return false
 }
 
-func (m *Build) GetDate() *timestamp.Timestamp {
+func (m *Build) GetDate() *types.Timestamp {
 	if m != nil {
 		return m.Date
 	}
@@ -340,7 +340,7 @@ func (m *Build) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Date == nil {
-				m.Date = &timestamp.Timestamp{}
+				m.Date = &types.Timestamp{}
 			}
 			if err := m.Date.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
