@@ -1,0 +1,13 @@
+syntax = "proto3";
+package types;
+
+import "google/protobuf/timestamp.proto";
+
+message Build {
+    int64 ID = 1;
+    int64 GithubRepoID = 2;
+    bool IsSuccessfull = 3;
+    google.protobuf.Timestamp Date = 4;
+    string Branch = 5;
+    string Stdout = 6; 
+}
