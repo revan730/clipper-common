@@ -12,6 +12,15 @@ message Build {
     string Stdout = 6; 
 }
 
+message Repo {
+    int64 ID = 1;
+    string Branch = 2;
+}
+
+message BuildsArray {
+    repeated Build builds = 1;
+}
+
 message BuildArtifact {
     int64 ID = 1;
     int64 BuildID = 2;
@@ -21,4 +30,5 @@ message BuildArtifact {
 service CIAPI {
     rpc GetBuild(Build) returns (Build) {}
     rpc GetBuildArtifact(BuildArtifact) returns (BuildArtifact) {}
+    rpc GetAllBuilds(Repo) returns (BuildsArray) {}
 }
