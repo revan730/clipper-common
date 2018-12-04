@@ -12,9 +12,11 @@ message Build {
     string Stdout = 6; 
 }
 
-message Repo {
-    int64 ID = 1;
+message BuildsQuery {
+    int64 RepoID = 1;
     string Branch = 2;
+    int64 Page = 3;
+    int64 Limit = 4;
 }
 
 message BuildsArray {
@@ -30,5 +32,5 @@ message BuildArtifact {
 service CIAPI {
     rpc GetBuild(Build) returns (Build) {}
     rpc GetBuildArtifact(BuildArtifact) returns (BuildArtifact) {}
-    rpc GetAllBuilds(Repo) returns (BuildsArray) {}
+    rpc GetAllBuilds(BuildsQuery) returns (BuildsArray) {}
 }
