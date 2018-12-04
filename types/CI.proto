@@ -20,4 +20,5 @@ message BuildArtifact {
 
 service CIAPI {
     rpc GetBuild(Build) returns (Build) {}
+    rpc GetBuildArtifact(BuildArtifact) returns (BuildArtifact) {}
 }
