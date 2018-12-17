@@ -7,6 +7,11 @@ import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 
+import (
+	context "golang.org/x/net/context"
+	grpc "google.golang.org/grpc"
+)
+
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
@@ -121,6 +126,78 @@ var xxx_messageInfo_Empty proto.InternalMessageInfo
 func init() {
 	proto.RegisterType((*Deployment)(nil), "types.Deployment")
 	proto.RegisterType((*Empty)(nil), "types.Empty")
+}
+
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConn
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion4
+
+// CDAPIClient is the client API for CDAPI service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type CDAPIClient interface {
+	CreateDeployment(ctx context.Context, in *Deployment, opts ...grpc.CallOption) (*Empty, error)
+}
+
+type cDAPIClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewCDAPIClient(cc *grpc.ClientConn) CDAPIClient {
+	return &cDAPIClient{cc}
+}
+
+func (c *cDAPIClient) CreateDeployment(ctx context.Context, in *Deployment, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/types.CDAPI/CreateDeployment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// CDAPIServer is the server API for CDAPI service.
+type CDAPIServer interface {
+	CreateDeployment(context.Context, *Deployment) (*Empty, error)
+}
+
+func RegisterCDAPIServer(s *grpc.Server, srv CDAPIServer) {
+	s.RegisterService(&_CDAPI_serviceDesc, srv)
+}
+
+func _CDAPI_CreateDeployment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Deployment)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CDAPIServer).CreateDeployment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/types.CDAPI/CreateDeployment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CDAPIServer).CreateDeployment(ctx, req.(*Deployment))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _CDAPI_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "types.CDAPI",
+	HandlerType: (*CDAPIServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateDeployment",
+			Handler:    _CDAPI_CreateDeployment_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "CD.proto",
 }
 
 func init() { proto.RegisterFile("CD.proto", fileDescriptor_CD_007861780a6a2a09) }
