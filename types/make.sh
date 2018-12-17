@@ -1,3 +1,3 @@
 #/bin/sh
 
-protoc --go_out=plugins=grpc:. CI.proto
+protoc --go_out=plugins=grpc:. *.proto
