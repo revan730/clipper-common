@@ -4,9 +4,10 @@ package types;
 message Deployment {
     int64 ID = 1;
 	string Branch = 2;
-	int64 ArtifactID = 3;
-	string K8SName = 4;
-	string Manifest = 5;
+	int64 RepoID = 3;
+	int64 ArtifactID = 4;
+	string K8SName = 5;
+	string Manifest = 6;
 }
 
 message Empty {}
