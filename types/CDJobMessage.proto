@@ -4,5 +4,5 @@ package types;
 message CDJob {
     int64 repoID = 1;
     string branch = 2;
-    string gcrTag = 3;
+    int64 artifactID = 3;
 }
