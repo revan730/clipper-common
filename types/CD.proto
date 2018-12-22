@@ -8,6 +8,7 @@ message Deployment {
 	int64 ArtifactID = 4;
 	string K8SName = 5;
 	string Manifest = 6;
+	int64 Replicas = 7;
 }
 
 message Empty {}
