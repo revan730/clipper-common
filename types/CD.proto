@@ -14,5 +14,6 @@ message Deployment {
 message Empty {}
 
 service CDAPI {
-    rpc CreateDeployment(Deployment) returns (Empty) {}
+	rpc CreateDeployment(Deployment) returns (Empty) {}
+	rpc ChangeImage(Deployment) returns (Empty) {}
 }
