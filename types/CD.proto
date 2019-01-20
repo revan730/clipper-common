@@ -17,4 +17,5 @@ service CDAPI {
 	rpc CreateDeployment(Deployment) returns (Empty) {}
 	rpc ChangeImage(Deployment) returns (Empty) {}
 	rpc ScaleDeployment(Deployment) returns (Empty) {}
+	rpc UpdateManifest(Deployment) returns (Empty) {}
 }
