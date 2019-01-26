@@ -23,6 +23,7 @@ message DeploymentsArray {
 message Empty {}
 
 service CDAPI {
+	rpc GetAllDeployments(DeploymentsQuery) returns (DeploymentsArray) {}
 	rpc GetDeployment(Deployment) returns (Deployment) {}
 	rpc CreateDeployment(Deployment) returns (Empty) {}
 	rpc ChangeImage(Deployment) returns (Empty) {}
