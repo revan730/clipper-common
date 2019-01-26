@@ -11,9 +11,19 @@ message Deployment {
 	int64 Replicas = 7;
 }
 
+message DeploymentsQuery {
+	int64 Page = 1;
+	int64 Limit = 2;
+}
+
+message DeploymentsArray {
+	repeated Deployment deployments = 1;
+}
+
 message Empty {}
 
 service CDAPI {
+	rpc GetDeployment(Deployment) returns (Deployment) {}
 	rpc CreateDeployment(Deployment) returns (Empty) {}
 	rpc ChangeImage(Deployment) returns (Empty) {}
 	rpc ScaleDeployment(Deployment) returns (Empty) {}
