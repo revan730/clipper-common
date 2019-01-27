@@ -1,6 +1,8 @@
 syntax = "proto3";
 package types;
 
+import "google/protobuf/timestamp.proto";
+
 message Deployment {
     int64 ID = 1;
 	string Branch = 2;
@@ -20,9 +22,29 @@ message DeploymentsArray {
 	repeated Deployment deployments = 1;
 }
 
+message Revision {
+	int64 ID = 1;
+	int64 DeploymentID = 2;
+	int64 ArtifactID = 3;
+	google.protobuf.Timestamp Date = 4;
+	string Stdout = 5;
+	int64 Replicas = 6;
+}
+
+message RevisionsQuery {
+	int64 DeploymentID = 1;
+	int64 Page = 2;
+	int64 Limit = 3;
+}
+
+message RevisionsArray {
+	repeated Revision revisions = 1;
+}
+
 message Empty {}
 
 service CDAPI {
+	rpc GetRevisions(RevisionsQuery) returns (RevisionsArray) {} 
 	rpc GetAllDeployments(DeploymentsQuery) returns (DeploymentsArray) {}
 	rpc GetDeployment(Deployment) returns (Deployment) {}
 	rpc CreateDeployment(Deployment) returns (Empty) {}
