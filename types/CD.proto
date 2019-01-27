@@ -19,7 +19,8 @@ message DeploymentsQuery {
 }
 
 message DeploymentsArray {
-	repeated Deployment deployments = 1;
+	int64 Total = 1;
+	repeated Deployment deployments = 2;
 }
 
 message Revision {
