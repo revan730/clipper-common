@@ -38,7 +38,8 @@ message RevisionsQuery {
 }
 
 message RevisionsArray {
-	repeated Revision revisions = 1;
+	int64 Total = 1;
+	repeated Revision revisions = 2;
 }
 
 message Empty {}
