@@ -30,9 +30,15 @@ message BuildArtifact {
     string Name = 3; 
 }
 
+message ArtifactsArray {
+    int64 Total = 1;
+    repeated BuildArtifact Artifacts = 2;
+}
+
 service CIAPI {
     rpc GetBuild(Build) returns (Build) {}
     rpc GetBuildArtifact(BuildArtifact) returns (BuildArtifact) {}
     rpc GetBuildArtifactByID(BuildArtifact) returns (BuildArtifact) {}
     rpc GetAllBuilds(BuildsQuery) returns (BuildsArray) {}
+    rpc GetAllArtifacts(BuildsQuery) returns (ArtifactsArray) {}
 }
