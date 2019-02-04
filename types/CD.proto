@@ -11,6 +11,7 @@ message Deployment {
 	string K8SName = 5;
 	string Manifest = 6;
 	int64 Replicas = 7;
+	bool IsInitialized = 8;
 }
 
 message DeploymentsQuery {
