@@ -47,6 +47,7 @@ message RevisionsArray {
 message Empty {}
 
 service CDAPI {
+	rpc GetRevision(Revision) returns (Revision) {}
 	rpc GetRevisions(RevisionsQuery) returns (RevisionsArray) {} 
 	rpc GetAllDeployments(DeploymentsQuery) returns (DeploymentsArray) {}
 	rpc GetDeployment(Deployment) returns (Deployment) {}
